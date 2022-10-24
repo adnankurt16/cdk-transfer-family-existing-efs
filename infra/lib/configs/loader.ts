@@ -11,6 +11,10 @@ interface IConfig {
     Region: string;
   };
   VpcID: string;
+  Efs: {
+    UId: string;
+    GId: string;
+  };
 }
 
 dotenv.config({
@@ -26,6 +30,8 @@ const schema = joi
     AWS_ACCOUNT_ID: joi.number().required(),
     AWS_REGION: joi.string().required(),
     VPC_ID: joi.string().custom(VpcValidator).required(),
+    EFS_UID: joi.number().required(),
+    EFS_GID: joi.number().required(),
   })
   .unknown();
 
@@ -43,4 +49,8 @@ export const Config: IConfig = {
     Region: envVars.AWS_REGION,
   },
   VpcID: envVars.VPC_ID,
+  Efs: {
+    UId: `${envVars.EFS_UID}`,
+    GId: `${envVars.EFS_GID}`,
+  },
 };

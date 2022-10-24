@@ -25,7 +25,7 @@ Default output format [json]:
 
 ```bash
 $ cd infra
-$ npm i -g aws-cdk@2.45
+$ npm i -g aws-cdk@2.46
 $ npm i
 ```
 
@@ -34,6 +34,8 @@ $ npm i
 open [**infra/env/dev.env**](/infra/env/dev.env) and fill the blow fields
 
 - `VPC_ID`: vpc id
+- `EFS_UID`: efs uid
+- `EFS_GID`: efs gid
 - `AWS_ACCOUNT_ID`: 12 digit account id
 - `AWS_REGION`: e.g. ap-northeast-2
 

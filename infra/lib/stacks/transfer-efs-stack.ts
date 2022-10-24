@@ -12,6 +12,8 @@ interface IProps extends StackProps {
   vpc: ec2.IVpc;
   securityGroup: ec2.ISecurityGroup;
   fileSystem: efs.IFileSystem;
+  uid: string;
+  gid: string;
 }
 
 export class TransferEfsStack extends Stack {
@@ -38,6 +40,8 @@ export class TransferEfsStack extends Stack {
       environment: {
         ROLE_ARN: transferRole.roleArn,
         EFS_ID: props.fileSystem.fileSystemId,
+        EFS_UID: props.uid,
+        EFS_GID: props.gid,
       },
     });
     identifier.grantInvoke(new iam.ServicePrincipal('transfer.amazonaws.com'));

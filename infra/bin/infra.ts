@@ -32,6 +32,8 @@ const transferEfsStack = new TransferEfsStack(
     vpc: vpcStack.vpc,
     securityGroup: vpcStack.taskSecurityGroup,
     fileSystem: efsStack.fileSystem,
+    uid: Config.Efs.UId,
+    gid: Config.Efs.GId,
     env: {
       account: Config.AWS.Account,
       region: Config.AWS.Region,
