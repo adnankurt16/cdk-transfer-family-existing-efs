@@ -10,7 +10,6 @@ import * as tr from 'aws-cdk-lib/aws-transfer';
 
 interface IProps extends StackProps {
   vpc: ec2.IVpc;
-  securityGroup: ec2.ISecurityGroup;
   fileSystem: efs.IFileSystem;
   uid: string;
   gid: string;
@@ -46,11 +45,14 @@ export class TransferEfsStack extends Stack {
     });
     identifier.grantInvoke(new iam.ServicePrincipal('transfer.amazonaws.com'));
 
+    const securityGroupIds = props.fileSystem.connections.securityGroups.map(
+      (sg) => sg.securityGroupId
+    );
     new tr.CfnServer(this, `Server`, {
       domain: 'EFS',
       endpointDetails: {
         subnetIds: props.vpc.privateSubnets.map((subnet) => subnet.subnetId),
-        securityGroupIds: [props.securityGroup.securityGroupId],
+        securityGroupIds,
         vpcId: props.vpc.vpcId,
       },
       endpointType: 'VPC',

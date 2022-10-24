@@ -15,6 +15,7 @@ interface IConfig {
     UId: string;
     GId: string;
   };
+  IsProd: () => boolean;
 }
 
 dotenv.config({
@@ -53,4 +54,5 @@ export const Config: IConfig = {
     UId: `${envVars.EFS_UID}`,
     GId: `${envVars.EFS_GID}`,
   },
+  IsProd: () => Config.Stage === 'Prod',
 };

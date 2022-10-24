@@ -9,6 +9,7 @@ import { Config } from '../lib/configs/loader';
 const app = new cdk.App();
 
 const vpcStack = new VpcStack(app, `${Config.Ns}VpcStack`, {
+  vpcId: Config.VpcID,
   env: {
     account: Config.AWS.Account,
     region: Config.AWS.Region,
@@ -17,7 +18,6 @@ const vpcStack = new VpcStack(app, `${Config.Ns}VpcStack`, {
 
 const efsStack = new EfsStack(app, `${Config.Ns}EfsStack`, {
   vpc: vpcStack.vpc,
-  securityGroup: vpcStack.taskSecurityGroup,
   env: {
     account: Config.AWS.Account,
     region: Config.AWS.Region,
@@ -30,7 +30,6 @@ const transferEfsStack = new TransferEfsStack(
   `${Config.Ns}TransferEfsStack`,
   {
     vpc: vpcStack.vpc,
-    securityGroup: vpcStack.taskSecurityGroup,
     fileSystem: efsStack.fileSystem,
     uid: Config.Efs.UId,
     gid: Config.Efs.GId,
