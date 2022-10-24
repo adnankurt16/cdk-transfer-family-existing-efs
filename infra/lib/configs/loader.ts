@@ -2,21 +2,7 @@ import * as path from 'path';
 import * as joi from 'joi';
 import * as dotenv from 'dotenv';
 import { VpcValidator } from './validators';
-
-interface IConfig {
-  Ns: string;
-  Stage: string;
-  AWS: {
-    Account: string;
-    Region: string;
-  };
-  VpcID: string;
-  Efs: {
-    UId: string;
-    GId: string;
-  };
-  IsProd: () => boolean;
-}
+import { IConfig } from './interface';
 
 dotenv.config({
   path: path.resolve(__dirname, '..', '..', '.env'),
@@ -54,5 +40,5 @@ export const Config: IConfig = {
     UId: `${envVars.EFS_UID}`,
     GId: `${envVars.EFS_GID}`,
   },
-  IsProd: () => Config.Stage === 'Prod',
+  IsDev: () => Config.Stage === 'Dev',
 };

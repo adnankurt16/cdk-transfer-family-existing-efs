@@ -26,11 +26,12 @@ export class EfsStack extends Stack {
     const fileSystem = new efs.FileSystem(this, `FileSystem`, {
       vpc: props.vpc,
       securityGroup,
+      encrypted: true,
       performanceMode: efs.PerformanceMode.GENERAL_PURPOSE,
       throughputMode: efs.ThroughputMode.BURSTING,
-      removalPolicy: Config.IsProd()
-        ? RemovalPolicy.RETAIN
-        : RemovalPolicy.DESTROY,
+      removalPolicy: Config.IsDev()
+        ? RemovalPolicy.DESTROY
+        : RemovalPolicy.RETAIN,
     });
     fileSystem.connections.allowInternally(ec2.Port.allTraffic());
 
