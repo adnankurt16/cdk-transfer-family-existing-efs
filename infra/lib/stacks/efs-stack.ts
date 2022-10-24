@@ -1,4 +1,4 @@
-import { Stack, StackProps, CfnOutput, RemovalPolicy } from 'aws-cdk-lib';
+import { Stack, StackProps, RemovalPolicy } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import * as efs from 'aws-cdk-lib/aws-efs';
@@ -34,13 +34,6 @@ export class EfsStack extends Stack {
         : RemovalPolicy.RETAIN,
     });
     fileSystem.connections.allowInternally(ec2.Port.allTraffic());
-
-    new CfnOutput(this, 'FileSystemOutput', {
-      value: fileSystem.fileSystemId,
-    });
-    new CfnOutput(this, 'FileSystemSecurityGroupOutput', {
-      value: securityGroup.securityGroupId,
-    });
 
     return fileSystem;
   }
