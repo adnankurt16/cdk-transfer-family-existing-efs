@@ -42,7 +42,7 @@ const transferEfsStack = new TransferEfsStack(
 transferEfsStack.addDependency(efsStack);
 
 const tags = cdk.Tags.of(app);
-tags.add('saga:namespace', Config.Ns);
-tags.add('saga:stage', Config.Stage);
+tags.add('namespace', Config.Ns);
+tags.add('stage', Config.Stage);
 
 app.synth();
