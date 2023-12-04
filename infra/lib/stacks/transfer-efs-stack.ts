@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { Stack, StackProps } from 'aws-cdk-lib';
+import { CfnOutput, Stack, StackProps } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import * as efs from 'aws-cdk-lib/aws-efs';
@@ -55,6 +55,10 @@ export class TransferEfsStack extends Stack {
       loggingRole: transferRole.roleArn,
       protocols: ['SFTP'],
       securityPolicyName: 'TransferSecurityPolicy-2022-03',
+    });
+
+    new CfnOutput(this, 'TransferEndpoint', {
+      value: `sftp://${transferServer.attrServerId}.server.transfer.${this.region}.amazonaws.com`
     });
   }
 }
