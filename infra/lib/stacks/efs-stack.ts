@@ -17,22 +17,23 @@ export class EfsStack extends Stack {
     this.fileSystem = this.newFileSystem(props);
   }
 
-  newFileSystem(props: IProps): efs.FileSystem {
+  newFileSystem(props: IProps): efs.IFileSystem {
     const securityGroup = new ec2.SecurityGroup(this, 'SecurityGroup', {
       securityGroupName: `${Config.Ns}EFSSecurityGroup`,
       vpc: props.vpc,
     });
 
-    const fileSystem = new efs.FileSystem(this, `FileSystem`, {
-      vpc: props.vpc,
+    const fileSystem = efs.FileSystem.fromFileSystemAttributes(this, 'FileSystem', {
+      fileSystemId: Config.Efs.ID,
       securityGroup,
-      encrypted: true,
-      performanceMode: efs.PerformanceMode.GENERAL_PURPOSE,
-      throughputMode: efs.ThroughputMode.BURSTING,
-      removalPolicy: Config.IsDev()
-        ? RemovalPolicy.DESTROY
-        : RemovalPolicy.RETAIN,
     });
+
+    new efs.CfnMountTarget(this, 'MountTarget', {
+      fileSystemId: fileSystem.fileSystemId,
+      securityGroups: [securityGroup.securityGroupId],
+      subnetId: props.vpc.privateSubnets[0].subnetId,
+    });
+
     fileSystem.connections.allowInternally(ec2.Port.allTraffic());
 
     return fileSystem;
