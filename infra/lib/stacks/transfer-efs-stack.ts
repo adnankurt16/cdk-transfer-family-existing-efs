@@ -7,6 +7,7 @@ import * as iam from 'aws-cdk-lib/aws-iam';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as lambdaNodejs from 'aws-cdk-lib/aws-lambda-nodejs';
 import * as tr from 'aws-cdk-lib/aws-transfer';
+import { Config } from '../configs/loader';
 
 interface IProps extends StackProps {
   vpc: ec2.IVpc;
@@ -41,6 +42,8 @@ export class TransferEfsStack extends Stack {
         EFS_ID: props.fileSystem.fileSystemId,
         EFS_UID: props.uid,
         EFS_GID: props.gid,
+        FTP_USERNAME: Config.Ftp.Username,
+        FTP_PASSWORD: Config.Ftp.Password,
       },
     });
     identifier.grantInvoke(new iam.ServicePrincipal('transfer.amazonaws.com'));
