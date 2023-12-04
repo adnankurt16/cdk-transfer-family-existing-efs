@@ -1,6 +1,6 @@
-# CDK Transfer Family EFS
+# CDK Transfer Family with existing EFS and public FTP Endpoint
 
-aws transfer-family-efs cdk example
+aws transfer-family-efs cdk with existing efs and public ftp endpoint example
 
 # Prerequisites
 
@@ -34,10 +34,13 @@ $ npm i
 open [**infra/env/dev.env**](/infra/env/dev.env) and fill the blow fields
 
 - `VPC_ID`: vpc id
-- `EFS_UID`: efs uid
-- `EFS_GID`: efs gid
+- `EFS_ID`: efs id
+- `EFS_UID`: efs uid (default: 0)
+- `EFS_GID`: efs gid (default: 0)
 - `AWS_ACCOUNT_ID`: 12 digit account id
 - `AWS_REGION`: e.g. ap-northeast-2
+- `FTP_USERNAME`: ftp username
+- `FTP_PASSWORD`: ftp password
 
 and copy `env/dev.env` file to project root as `.env`
 

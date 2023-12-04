@@ -17,8 +17,11 @@ const schema = joi
     AWS_ACCOUNT_ID: joi.number().required(),
     AWS_REGION: joi.string().required(),
     VPC_ID: joi.string().custom(VpcValidator).required(),
+    EFS_ID: joi.string().required(),
     EFS_UID: joi.number().required(),
     EFS_GID: joi.number().required(),
+    FTP_USERNAME: joi.string().required(),
+    FTP_PASSWORD: joi.string().required(),
   })
   .unknown();
 
@@ -37,8 +40,13 @@ export const Config: IConfig = {
   },
   VpcID: envVars.VPC_ID,
   Efs: {
+    ID: envVars.EFS_ID,
     UId: `${envVars.EFS_UID}`,
     GId: `${envVars.EFS_GID}`,
+  },
+  Ftp: {
+    Username: envVars.FTP_USERNAME,
+    Password: envVars.FTP_PASSWORD,
   },
   IsDev: () => Config.Stage === 'Dev',
 };
