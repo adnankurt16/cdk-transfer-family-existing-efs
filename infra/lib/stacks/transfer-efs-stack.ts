@@ -45,23 +45,15 @@ export class TransferEfsStack extends Stack {
     });
     identifier.grantInvoke(new iam.ServicePrincipal('transfer.amazonaws.com'));
 
-    const securityGroupIds = props.fileSystem.connections.securityGroups.map(
-      (sg) => sg.securityGroupId
-    );
-    new tr.CfnServer(this, `Server`, {
+    const transferServer = new tr.CfnServer(this, 'TransferServer', {
       domain: 'EFS',
-      endpointDetails: {
-        subnetIds: props.vpc.privateSubnets.map((subnet) => subnet.subnetId),
-        securityGroupIds,
-        vpcId: props.vpc.vpcId,
-      },
-      endpointType: 'VPC',
+      endpointType: 'PUBLIC',
       identityProviderDetails: {
         function: identifier.functionArn,
       },
       identityProviderType: 'AWS_LAMBDA',
       loggingRole: transferRole.roleArn,
-      protocols: ['SFTP', 'FTP'],
+      protocols: ['SFTP'],
       securityPolicyName: 'TransferSecurityPolicy-2022-03',
     });
   }
