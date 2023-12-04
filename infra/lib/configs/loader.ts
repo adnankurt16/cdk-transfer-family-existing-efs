@@ -14,7 +14,7 @@ const schema = joi
   .object({
     NS: joi.string().required(),
     STAGE: joi.string().required(),
-    AWS_ACCOUNT_ID: joi.number().required(),
+    AWS_ACCOUNT_ID: joi.string().required(),
     AWS_REGION: joi.string().required(),
     VPC_ID: joi.string().custom(VpcValidator).required(),
     EFS_ID: joi.string().required(),
