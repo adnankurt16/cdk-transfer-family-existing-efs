@@ -62,3 +62,11 @@ deploy infrastructure
 ```bash
 $ cdk deploy "*" --require-approval never
 ```
+
+## Error handling
+
+ERROR: failed to solve: public.ecr.aws/sam/build-nodejs16.x: error getting credentials - err: exit status 1
+
+```bash
+$ rm -rf ~/.docker/config.json
+```
